@@ -15,19 +15,14 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 class MyDaemon(Daemon):
     server = None
 
-    # def __init__(self, *args, **kwargs):
-    #     self.server = None
-    #     super(MyDaemon, self).__init__(args, kwargs)
-
     def run(self):
-        self.server = HTTPServer(('localhost', 8080), SimpleHTTP)
+        self.server = HTTPServer(('localhost', settings.HTTP_PORT_NUMBER), SimpleHTTP)
         # self.server = ThreadedHTTPServer(('', 8081), SimpleHTTP)
         self.server.serve_forever()
 
 
     def stop(self):
         if self.server:
-            print 'Stoping server'
             self.server.socket.close()
 
 
